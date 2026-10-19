@@ -360,7 +360,7 @@ code {
 }
 
 .command-input input:placeholder-shown { caret-color: transparent; }
-.command-input input:placeholder-shown + .terminal-cursor { display: block; }
+.command-input input:focus:placeholder-shown + .terminal-cursor { display: block; }
 
 .prompt-row input {
   min-width: 0;
