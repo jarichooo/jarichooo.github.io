@@ -54,7 +54,7 @@ button {
 }
 
 :focus-visible {
-  outline: 2px solid var(--cyan);
+  outline: 2px solid var(--green);
   outline-offset: 3px;
 }
 
@@ -375,12 +375,12 @@ code {
 }
 
 .prompt-row input:focus {
-  border-color: var(--cyan);
+  border-color: var(--green);
 }
 
 .prompt-row input:focus-visible {
-  outline: 2px solid var(--cyan);
-  outline-offset: 3px;
+  outline: none;
+  border-color: var(--green);
 }
 
 .prompt-row button {
@@ -408,6 +408,8 @@ code {
 .result {
   animation: reveal 220ms ease-out;
 }
+
+.result:focus { outline: none; }
 
 .result-command {
   margin-bottom: 1rem;

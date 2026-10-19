@@ -6,7 +6,7 @@
     <meta name="description" content="Joshua Jericho D. Barja's developer portfolio, presented as an accessible Linux terminal.">
     <meta name="theme-color" content="#080b0f">
     <title>Joshua Barja — Developer Portfolio</title>
-    <link rel="stylesheet" href="styles.css?v=terminal-cursor">
+    <link rel="stylesheet" href="styles.css?v=clean-prompt">
     <script src="app.js?v=terminal-cursor" defer></script>
   </head>
   <body>
@@ -36,21 +36,12 @@
           <div class="prompt-row">
             <span aria-hidden="true"><b>visitor@portfolio</b>:~$</span>
             <div class="command-input">
-              <input id="terminal-input" name="command" type="text" inputmode="text" autocomplete="off" spellcheck="false" placeholder=" " list="command-suggestions" aria-describedby="prompt-help">
+              <input id="terminal-input" name="command" type="text" inputmode="text" autocomplete="off" spellcheck="false" placeholder=" " aria-describedby="prompt-help">
               <span class="terminal-cursor" aria-hidden="true"></span>
             </div>
             <button type="submit">Run<span class="sr-only"> command</span></button>
           </div>
-          <datalist id="command-suggestions">
-            <option value="about"></option>
-            <option value="projects"></option>
-            <option value="contact"></option>
-            <option value="skills"></option>
-            <option value="help"></option>
-            <option value="home"></option>
-            <option value="clear"></option>
-          </datalist>
-          <p id="prompt-help">Try <code>about</code>, <code>projects</code>, or <code>contact</code>. Press <code>/</code> to focus here.</p>
+          <p id="prompt-help">Commands: <code>about</code> · <code>projects</code> · <code>open &lt;number|name&gt;</code> · <code>skills</code> · <code>contact</code> · <code>help</code> · <code>home</code> · <code>clear</code> · <code>ls</code>. Aliases: <code>work</code> = projects, <code>project &lt;number|name&gt;</code> = open. Press <code>/</code> to focus the prompt.</p>
         </form>
       </section>
 
