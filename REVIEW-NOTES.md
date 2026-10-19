@@ -1,0 +1,23 @@
+# Review and preview handoff
+
+The ui-designer and frontend-developer agents designed and implemented this portfolio. The accessibility-tester reviewed source and confirmed the heading order, focus outline, control contrast, target sizes, keyboard paths, and reduced-motion rules after fixes. Result regions are additionally named by their generated headings.
+
+The reviewer found no blocking correctness, security, private-content, or deployment issues. Its requested wording fix was applied: the footer says "No site analytics" rather than making an absolute tracking claim about hosting.
+
+Verified locally:
+
+- `python check_site.py`: passed for three public projects, pinned evidence links, asset references, and manual deployment allowlist.
+- `python -m unittest discover -s tests -p 'test_*.py'`: three tests passed after the compact-terminal revision.
+- Workflow YAML parsed successfully.
+- `git diff --check`: passed.
+- HTTP responses for index.html, styles.css, app.js, and projects.json: 200.
+
+Preview: http://127.0.0.1:8000/ while the local server runs. Start it again with the command in README.md if needed.
+
+No connected browser or JavaScript runtime was available to the authoring session. The prepared tests/app_logic_test.html has not been executed. Actual visual layout, keyboard interaction, 320px reflow, 400% zoom, and screen-reader announcements still require a real-browser check. Source review does not establish WCAG conformance.
+
+The owner subsequently authorized publishing to main and GitHub Pages. Only the four allowlisted public site files enter the prepared deployment artifact. Private repository content was excluded.
+
+Latest revision: removed Azure Enrollment, Lexical Analyzer, and EduCore; renamed retained projects to repository-based names; added publicly verified CrackTify. The initial project list was removed, shortcuts now start collapsed, and clear restores a welcome-only screen. Static checks were rerun successfully. Prior agent reviews apply to the earlier implementation; no local sub-agent definitions exist in .codex/agents for the latest revision, so no agents outside that folder were used. Browser interaction tests remain prepared but unexecuted.
+
+Publishing revision: project 2 is now named Morphism at the owner's request. A bounded grid keeps the transcript scrolling inside the terminal, with a keyboard-focusable scroll region and the prompt outside it. Commands scroll only the transcript rather than the document. Main pushes now trigger the Pages workflow. Preflight, three static tests, and whitespace checks pass. Browser layout and screen-reader validation remain outstanding.

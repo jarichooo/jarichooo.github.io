@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Joshua Jericho D. Barja's developer portfolio, presented as an accessible Linux terminal.">
+    <meta name="theme-color" content="#080b0f">
+    <title>Joshua Barja — Developer Portfolio</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#terminal-input">Skip to command prompt</a>
+
+    <main class="site-shell">
+      <section class="terminal" id="terminal" aria-label="Interactive portfolio terminal">
+        <div class="terminal-bar">
+          <div class="window-controls" aria-hidden="true">
+            <span></span><span></span><span></span>
+          </div>
+          <p>jarichooo@portfolio: ~</p>
+          <span class="connection-state"><i aria-hidden="true"></i> public session</span>
+        </div>
+
+        <details class="guide">
+          <summary>Need a hand? Show command shortcuts</summary>
+          <div class="guide-copy">
+            <p class="eyebrow">Quick start</p>
+            <p class="guide-title" id="guide-title">New to terminals?</p>
+            <p>Choose an option. Each one runs the command shown beneath it.</p>
+          </div>
+          <nav aria-label="Guided portfolio commands">
+            <button type="button" data-command="help">
+              <strong>Start here</strong>
+              <span>help</span>
+            </button>
+            <button type="button" data-command="projects">
+              <strong>Selected work</strong>
+              <span>projects</span>
+            </button>
+            <button type="button" data-command="about">
+              <strong>About</strong>
+              <span>about</span>
+            </button>
+            <button type="button" data-command="contact">
+              <strong>Contact</strong>
+              <span>contact</span>
+            </button>
+          </nav>
+        </details>
+
+        <div class="output" id="output" role="region" aria-label="Scrollable terminal transcript" tabindex="0">
+          <section class="welcome" aria-labelledby="welcome-title">
+            <p class="command-line"><span>visitor@portfolio</span>:~$ welcome</p>
+            <p class="eyebrow">Developer portfolio / public work</p>
+            <h1 id="welcome-title">Hello. I’m Joshua.</h1>
+            <p class="welcome-copy">I’m <strong>Joshua Jericho D. Barja</strong>, also <strong>@jarichooo</strong> on GitHub. This portfolio shows selected public work and the evidence behind it.</p>
+            <p class="welcome-hint">Your session is ready. Type <code>help</code> below and press Enter to begin.</p>
+            <button class="text-command" type="button" data-command="help">Run help ↵</button>
+          </section>
+        </div>
+
+        <form class="prompt" id="command-form">
+          <label for="terminal-input">Enter a portfolio command</label>
+          <div class="prompt-row">
+            <span aria-hidden="true"><b>visitor@portfolio</b>:~$</span>
+            <input id="terminal-input" name="command" type="text" inputmode="text" autocomplete="off" spellcheck="false" aria-describedby="prompt-help">
+            <button type="submit">Run<span class="sr-only"> command</span></button>
+          </div>
+          <p id="prompt-help">Try <code>help</code>, <code>projects</code>, or <code>open 1</code>. Press <code>/</code> to focus here.</p>
+        </form>
+      </section>
+
+      <footer>
+        <p>Built for the open web. No site analytics, no terminal access.</p>
+        <a href="https://github.com/jarichooo" target="_blank" rel="noreferrer">github.com/jarichooo</a>
+      </footer>
+    </main>
+
+    <p class="sr-only" id="announcer" aria-live="polite" aria-atomic="true"></p>
+
+    <noscript>
+      <section class="no-script">
+        <h2>JavaScript is off</h2>
+        <p>This interactive portfolio needs JavaScript for terminal commands. You can still view Joshua’s public work on <a href="https://github.com/jarichooo">GitHub</a>.</p>
+      </section>
+    </noscript>
+  </body>
+</html>

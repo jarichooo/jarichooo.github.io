@@ -1,0 +1,70 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Portfolio command checks</title>
+<button type="button" data-command="help">Help shortcut</button>
+<div id="output">
+  <section class="welcome"><h1>Welcome</h1></section>
+</div>
+<form id="command-form">
+  <input id="terminal-input" aria-describedby="prompt-help">
+  <button type="submit">Run</button>
+</form>
+<p id="prompt-help">Help</p>
+<p id="announcer"></p>
+<pre id="test-results">Running…</pre>
+
+<script>
+  const fixture = [{
+    id: "sample",
+    title: "Sample project",
+    repo: "https://github.com/jarichooo/sample",
+    summary: "Fixture summary",
+    stack: ["JavaScript"],
+    status: "Fixture",
+    contribution: "Fixture contribution",
+    why: "Fixture reason",
+    limitations: "Fixture limit",
+    sources: [{ label: "Source", url: "https://github.com/jarichooo/sample" }]
+  }];
+  window.fetch = () => Promise.resolve({ ok: true, json: () => Promise.resolve(fixture) });
+  HTMLElement.prototype.scrollIntoView = function () { throw new Error("Command output must scroll the transcript, not the page"); };
+</script>
+<script src="../app.js"></script>
+<script>
+  window.setTimeout(() => {
+    const results = document.querySelector("#test-results");
+    const input = document.querySelector("#terminal-input");
+    const form = document.querySelector("#command-form");
+    const submit = (command) => {
+      input.value = command;
+      form.dispatchEvent(new Event("submit", { bubbles: true, cancelable: true }));
+    };
+    const check = (condition, message) => {
+      if (!condition) throw new Error(message);
+    };
+
+    try {
+      check(!document.querySelector(".project-card"), "landing waits for a command");
+      document.querySelector('[data-command="help"]').click();
+      check(document.querySelector(".result:last-child h2").textContent === "Available commands", "help shortcut");
+      submit("open 1");
+      check(document.querySelector(".result:last-child h2").textContent === "Sample project", "number lookup");
+      submit("work");
+      check(document.querySelector(".result:last-child h2").textContent === "Selected public projects", "work alias");
+      check(document.querySelectorAll(".project-card").length === 1, "projects appear after command");
+      submit("nope");
+      check(document.querySelector(".result:last-child .error").textContent.includes("Command not found"), "unknown command");
+      submit("constructor");
+      check(document.querySelector(".result:last-child .error").textContent.includes("Command not found"), "inherited names are not commands");
+      submit("");
+      check(document.querySelector(".result:last-child h2").textContent === "Enter a command", "empty command hint");
+      submit("clear");
+      check(document.querySelector(".welcome") && !document.querySelector(".result"), "clear restores welcome");
+      check(!document.querySelector(".project-card"), "clear restores command-first landing");
+      results.textContent = "PASS: command routing, aliases, errors, empty input, and clear";
+    } catch (error) {
+      results.textContent = `FAIL: ${error.message}`;
+      throw error;
+    }
+  }, 0);
+</script>
