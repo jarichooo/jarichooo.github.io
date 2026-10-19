@@ -86,7 +86,11 @@ button {
   border-radius: 14px;
   background: rgba(13, 17, 23, 0.98);
   box-shadow: 0 30px 90px rgba(0, 0, 0, 0.45);
+  animation: reveal 360ms ease-out;
+  transition: border-color 180ms ease;
 }
+
+.terminal:focus-within { border-color: var(--control-line); }
 
 .terminal-bar {
   display: grid;
@@ -199,6 +203,12 @@ button {
   line-height: 1;
 }
 
+.welcome h1::after {
+  content: "_";
+  color: var(--green);
+  animation: cursor 900ms steps(2, jump-none) 3;
+}
+
 .welcome-copy {
   max-width: 62ch;
   margin: 1.35rem 0 0.65rem;
@@ -245,6 +255,8 @@ code {
 .project-card {
   padding: 1.1rem 0;
   border-bottom: 1px solid var(--line);
+  animation: reveal 240ms ease-out backwards;
+  animation-delay: var(--reveal-delay, 0ms);
 }
 
 .project-meta {
@@ -298,7 +310,10 @@ code {
   font-size: 0.75rem;
   text-decoration: underline;
   text-underline-offset: 0.25em;
+  transition: color 160ms ease, transform 160ms ease;
 }
+
+.project-card button:hover { color: var(--green); transform: translateX(3px); }
 
 .prompt {
   padding: 1rem clamp(1rem, 4vw, 2rem) calc(1rem + env(safe-area-inset-bottom));
@@ -356,6 +371,7 @@ code {
   color: var(--cyan);
   background: transparent;
   cursor: pointer;
+  transition: color 160ms ease, background-color 160ms ease;
 }
 
 .prompt-row button:hover {
@@ -370,7 +386,7 @@ code {
 }
 
 .result {
-  animation: reveal 120ms ease-out;
+  animation: reveal 220ms ease-out;
 }
 
 .result-command {
@@ -464,8 +480,10 @@ code {
 }
 
 @keyframes reveal {
-  from { opacity: 0; transform: translateY(2px); }
+  from { opacity: 0; transform: translateY(6px); }
 }
+
+@keyframes cursor { 50% { opacity: 0; } }
 
 @media (max-width: 760px) {
   .project-meta {
@@ -528,5 +546,7 @@ code {
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .result { animation: none; }
+  .terminal, .result, .project-card, .welcome h1::after { animation: none; }
+  .terminal, .project-card button, .prompt-row button { transition: none; }
+  .project-card button:hover { transform: none; }
 }

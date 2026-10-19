@@ -55,6 +55,10 @@
       check(document.querySelectorAll(".result").length === 1 && !document.querySelector(".welcome"), "project replaces help and welcome");
       submit("open sample");
       check(document.querySelectorAll(".result").length === 1, "opening another project closes the previous output");
+      submit("open Sample project");
+      check(document.querySelector(".result:last-child h2").textContent === "Sample project", "project title lookup");
+      document.querySelector('[data-command="projects"]').click();
+      check(document.querySelector(".result:last-child h2").textContent === "Selected public projects", "back to project list");
       submit("work");
       check(document.querySelector(".result:last-child h2").textContent === "Selected public projects", "work alias");
       check(document.querySelectorAll(".project-card").length === 1, "projects appear after command");

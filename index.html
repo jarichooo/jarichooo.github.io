@@ -35,9 +35,17 @@
           <label for="terminal-input">Enter a portfolio command</label>
           <div class="prompt-row">
             <span aria-hidden="true"><b>visitor@portfolio</b>:~$</span>
-            <input id="terminal-input" name="command" type="text" inputmode="text" autocomplete="off" spellcheck="false" aria-describedby="prompt-help">
+            <input id="terminal-input" name="command" type="text" inputmode="text" autocomplete="off" spellcheck="false" placeholder="about" list="command-suggestions" aria-describedby="prompt-help">
             <button type="submit">Run<span class="sr-only"> command</span></button>
           </div>
+          <datalist id="command-suggestions">
+            <option value="about"></option>
+            <option value="projects"></option>
+            <option value="contact"></option>
+            <option value="skills"></option>
+            <option value="help"></option>
+            <option value="clear"></option>
+          </datalist>
           <p id="prompt-help">Try <code>about</code>, <code>projects</code>, or <code>contact</code>. Press <code>/</code> to focus here.</p>
         </form>
       </section>

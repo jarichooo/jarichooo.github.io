@@ -48,6 +48,7 @@ class PortfolioSiteTests(unittest.TestCase):
         self.assertIn('fourth-year Computer Science student at Camarines Sur Polytechnic Colleges', script)
         self.assertIn('https://www.linkedin.com/in/joshua-jericho-barja-27b878286', script)
         self.assertIn('mailto:barjajoshuajericho@gmail.com', script)
+        self.assertNotIn('Choose Read project details', script)
 
     def test_commands_replace_output_without_nested_scrolling(self):
         html = (ROOT / "index.html").read_text(encoding="utf-8")

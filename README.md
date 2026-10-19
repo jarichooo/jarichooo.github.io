@@ -12,6 +12,8 @@ The opening screen waits for input: type `about` and press Enter to read Joshua'
 
 Run `python check_site.py` to verify project data, pinned evidence URLs, local assets, and the deployment allowlist. This check does not replace browser or screen-reader testing.
 
+The prompt suggests command names as you type. Projects can be opened by number, id, or title (for example `open Morphism`); project details include an All projects button. Entrance, card, cursor, and hover animations respect reduced-motion preferences; content never waits for animation to finish.
+
 Run `python -m unittest discover -s tests -p 'test_*.py'` for the static regression checks. Open http://127.0.0.1:8000/tests/app_logic_test.html to run the prepared command-routing checks in a browser. The browser checks were not executed in the authoring session because no browser was connected.
 
 ## GitHub Pages deployment

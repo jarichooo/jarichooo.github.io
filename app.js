@@ -34,6 +34,7 @@
 
   const projectCard = (project, index) => {
     const article = make("article", "", "project-card");
+    article.style.setProperty("--reveal-delay", `${index * 60}ms`);
     const meta = make("div", "", "project-meta");
     meta.append(
       make("span", String(index + 1).padStart(2, "0"), "project-index"),
@@ -107,13 +108,12 @@
     const list = make("div", "", "project-list");
     projects.forEach((project, index) => list.append(projectCard(project, index)));
     container.append(list);
-    addParagraph(container, "Choose Read project details, or type open <number|id>, to see selection reasons, contribution evidence, and public sources.", "muted");
   };
 
   const findProject = (query) => {
     const normalized = query.trim().toLowerCase();
     if (/^\d+$/.test(normalized)) return projects[Number(normalized) - 1];
-    return projects.find((project) => String(project.id).toLowerCase() === normalized);
+    return projects.find((project) => String(project.id).toLowerCase() === normalized || project.title.toLowerCase() === normalized);
   };
 
   const renderProject = (container, query) => {
@@ -130,6 +130,10 @@
     }
 
     addHeading(container, project.title);
+    const back = make("button", "← All projects", "text-command");
+    back.type = "button";
+    back.dataset.command = "projects";
+    container.append(back);
     addParagraph(container, project.summary || "No summary available.");
     if (Array.isArray(project.stack) && project.stack.length) {
       addSubheading(container, "Tools in the repository");
