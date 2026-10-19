@@ -14,6 +14,8 @@ Run `python check_site.py` to verify project data, pinned evidence URLs, local a
 
 The prompt suggests command names as you type. Projects can be opened by number, id, or title (for example `open Morphism`); project details include an All projects button. Entrance, card, cursor, and hover animations respect reduced-motion preferences; content never waits for animation to finish.
 
+`home` returns to the first screen and focuses the prompt. An empty prompt shows a blinking green block cursor; typing uses the native text caret. The opening screen animates again when returning home. Reduced motion keeps the cursor static.
+
 Run `python -m unittest discover -s tests -p 'test_*.py'` for the static regression checks. Open http://127.0.0.1:8000/tests/app_logic_test.html to run the prepared command-routing checks in a browser. The browser checks were not executed in the authoring session because no browser was connected.
 
 ## GitHub Pages deployment

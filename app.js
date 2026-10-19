@@ -75,6 +75,7 @@
     addHeading(container, "Available commands");
     const commands = [
       ["help", "Show this command guide"],
+      ["home", "Return to the opening screen"],
       ["about", "Read about Joshua"],
       ["projects", "List selected public projects"],
       ["open <number|id>", "Inspect evidence for one project"],
@@ -220,7 +221,7 @@
     const [name, ...args] = cleaned.split(" ");
     const command = name.toLowerCase();
 
-    if (command === "clear") {
+    if (command === "clear" || command === "home") {
       restoreWelcome();
       announce("Terminal reset to the welcome screen.");
       input.focus();

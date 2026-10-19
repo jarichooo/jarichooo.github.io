@@ -179,6 +179,7 @@ button {
 .welcome {
   padding-bottom: 2rem;
   border-bottom: 1px dashed var(--line);
+  animation: reveal 260ms ease-out;
 }
 
 .command-line,
@@ -201,12 +202,6 @@ button {
   font-weight: 700;
   letter-spacing: -0.07em;
   line-height: 1;
-}
-
-.welcome h1::after {
-  content: "_";
-  color: var(--green);
-  animation: cursor 900ms steps(2, jump-none) 3;
 }
 
 .welcome-copy {
@@ -341,6 +336,31 @@ code {
   color: var(--muted);
   white-space: nowrap;
 }
+
+.command-input {
+  position: relative;
+  display: flex;
+  flex: 1;
+  min-width: 0;
+}
+
+.command-input input { width: 100%; }
+
+.terminal-cursor {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 2px;
+  width: 0.65ch;
+  height: 1.1em;
+  margin-top: -0.55em;
+  background: var(--green);
+  pointer-events: none;
+  animation: cursor 1s steps(1, end) infinite;
+}
+
+.command-input input:placeholder-shown { caret-color: transparent; }
+.command-input input:placeholder-shown + .terminal-cursor { display: block; }
 
 .prompt-row input {
   min-width: 0;
@@ -534,10 +554,6 @@ code {
     width: 100%;
   }
 
-  .prompt-row input {
-    width: calc(100% - 5.1rem);
-  }
-
   .result .command-menu {
     grid-template-columns: 1fr;
   }
@@ -546,7 +562,7 @@ code {
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .terminal, .result, .project-card, .welcome h1::after { animation: none; }
+  .terminal, .welcome, .result, .project-card, .terminal-cursor { animation: none; }
   .terminal, .project-card button, .prompt-row button { transition: none; }
   .project-card button:hover { transform: none; }
 }
