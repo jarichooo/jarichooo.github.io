@@ -32,6 +32,13 @@
     return link;
   };
 
+  const commandButton = (command, label = command, className = "command-action") => {
+    const button = make("button", label, className);
+    button.type = "button";
+    button.dataset.command = command;
+    return button;
+  };
+
   const projectCard = (project, index) => {
     const article = make("article", "", "project-card");
     article.style.setProperty("--reveal-delay", `${index * 60}ms`);
@@ -41,29 +48,29 @@
       make("h3", project.title || "Untitled project"),
       make("span", project.status || "Public project", "project-status")
     );
-    article.append(meta, make("p", project.summary || "No summary available."));
+    article.append(meta, make("p", project.summary || "No summary available.", "project-summary"));
     if (Array.isArray(project.stack) && project.stack.length) {
       const stack = make("div", "", "stack");
       project.stack.forEach((tool) => stack.append(make("span", tool)));
       article.append(stack);
     }
-    const button = make("button", "Read project details");
-    button.type = "button";
-    button.dataset.command = `open ${project.id || index + 1}`;
+    const button = commandButton(`open ${project.id || index + 1}`, "View project", "project-link");
     button.setAttribute("aria-label", `Read project details for ${project.title || "project"}`);
     article.append(button);
     return article;
   };
 
   let headingCount = 0;
-  const addHeading = (container, title) => {
+  const addHeading = (container, title, context = "command output") => {
     const heading = make("h2", title);
     heading.id = `result-heading-${++headingCount}`;
     container.setAttribute("aria-labelledby", heading.id);
-    container.append(heading);
+    const header = make("header", "", "result-header");
+    header.append(make("p", context, "result-context"), heading);
+    container.append(header);
   };
+
   const addParagraph = (container, text, className) => container.append(make("p", text, className));
-  const addSubheading = (container, text) => container.append(make("h3", text));
 
   const addList = (container, items, className) => {
     const list = make("ul", "", className);
@@ -71,8 +78,22 @@
     container.append(list);
   };
 
+  const addDisclosure = (container, label, content) => {
+    if (!content) return;
+    const details = make("details", "", "project-disclosure");
+    details.append(make("summary", label));
+    const body = make("div", "", "disclosure-body");
+    if (typeof content === "string") {
+      body.append(make("p", content));
+    } else {
+      body.append(content);
+    }
+    details.append(body);
+    container.append(details);
+  };
+
   const renderHelp = (container) => {
-    addHeading(container, "Available commands");
+    addHeading(container, "Available commands", "help");
     const commands = [
       ["help", "Show this command guide"],
       ["home", "Return to the opening screen"],
@@ -86,24 +107,34 @@
     const list = make("ul", "", "command-menu");
     commands.forEach(([command, description]) => {
       const item = make("li");
-      item.append(make("code", command), document.createTextNode(description));
+      const button = commandButton(command, "", "command-menu-button");
+      button.append(make("code", command), make("span", description));
+      item.append(button);
       list.append(item);
     });
     container.append(list);
   };
 
   const renderAbout = (container) => {
-    addHeading(container, "About Joshua");
-    addParagraph(container, "Hi, I'm Joshua Jericho Barja, a fourth-year Computer Science student at Camarines Sur Polytechnic Colleges. My studies and personal interests are primarily focused on cybersecurity and computer networking. I am actively learning and building a solid foundation in these areas as I complete my degree and prepare to start my career in the tech industry.");
+    addHeading(container, "About Joshua", "about");
+    const profile = make("div", "", "about-profile");
+    addParagraph(profile, "Hi, I'm Joshua Jericho Barja, a fourth-year Computer Science student at Camarines Sur Polytechnic Colleges. My studies and personal interests are primarily focused on cybersecurity and computer networking. I am actively learning and building a solid foundation in these areas as I complete my degree and prepare to start my career in the tech industry.");
+    const focus = make("dl", "", "about-focus");
+    focus.append(make("dt", "Current focus"), make("dd", "Cybersecurity · Computer networking"));
+    profile.append(focus);
+    container.append(profile);
   };
 
   const renderProjects = (container) => {
-    addHeading(container, "Selected public projects");
+    addHeading(container, "Selected public projects", "projects");
     if (!projects.length) {
-      addParagraph(container, projectsError || "No project records are available.", projectsError ? "error" : "muted");
-      container.append(safeLink("Browse public repositories on GitHub", "https://github.com/jarichooo?tab=repositories"));
+      const state = make("div", "", "state-message");
+      addParagraph(state, projectsError || "No project records are available.", projectsError ? "error" : "muted");
+      state.append(safeLink("Browse public repositories on GitHub", "https://github.com/jarichooo?tab=repositories"));
+      container.append(state);
       return;
     }
+    addParagraph(container, `${projects.length} projects selected from public repositories.`, "result-summary");
     const list = make("div", "", "project-list");
     projects.forEach((project, index) => list.append(projectCard(project, index)));
     container.append(list);
@@ -117,81 +148,106 @@
 
   const renderProject = (container, query) => {
     if (!query) {
-      addHeading(container, "Project id needed");
-      addParagraph(container, "Use projects to see available numbers and ids, then enter open <number|id>.", "error");
+      addHeading(container, "Project id needed", "project");
+      const state = make("div", "", "state-message");
+      addParagraph(state, "Choose a project from the project list.", "error");
+      state.append(commandButton("projects", "View projects"));
+      container.append(state);
       return;
     }
     const project = findProject(query);
     if (!project) {
-      addHeading(container, "Project not found");
-      addParagraph(container, `No selected project has the id “${query}”. Run projects to see valid ids.`, "error");
+      addHeading(container, "Project not found", "project");
+      const state = make("div", "", "state-message");
+      addParagraph(state, `No selected project matches “${query}”.`, "error");
+      state.append(commandButton("projects", "View projects"));
+      container.append(state);
       return;
     }
 
-    addHeading(container, project.title);
-    const back = make("button", "← All projects", "text-command");
-    back.type = "button";
-    back.dataset.command = "projects";
-    container.append(back);
-    addParagraph(container, project.summary || "No summary available.");
+    addHeading(container, project.title, project.status || "project");
+    const toolbar = make("div", "", "result-toolbar");
+    toolbar.append(commandButton("projects", "← All projects", "text-command"));
+    container.append(toolbar);
+    addParagraph(container, project.summary || "No summary available.", "project-lead");
     if (Array.isArray(project.stack) && project.stack.length) {
-      addSubheading(container, "Tools in the repository");
-      addList(container, project.stack, "tag-list");
+      const tools = make("section", "", "project-tools");
+      tools.append(make("h3", "Tools in the repository"));
+      addList(tools, project.stack, "tag-list");
+      container.append(tools);
     }
-    if (project.contribution) {
-      addSubheading(container, "Verified contribution");
-      addParagraph(container, project.contribution);
-    }
-    if (project.why) {
-      addSubheading(container, "Why selected");
-      addParagraph(container, project.why);
-    }
-    if (project.limitations) {
-      addSubheading(container, "Scope and limits");
-      addParagraph(container, project.limitations);
-    }
+
+    const disclosures = make("div", "", "project-disclosures");
+    addDisclosure(disclosures, "Verified contribution", project.contribution);
+    addDisclosure(disclosures, "Why selected", project.why);
+    addDisclosure(disclosures, "Scope and limits", project.limitations);
     if (Array.isArray(project.sources) && project.sources.length) {
-      addSubheading(container, "Public sources");
-      const sources = make("ul");
+      const sources = make("ul", "", "source-list");
       project.sources.forEach((source) => {
         const item = make("li");
-        item.append(safeLink(`View ${source.label || "source"} for ${project.title}`, source.url || ""));
+        item.append(safeLink(source.label || "Source", source.url || ""));
         sources.append(item);
       });
-      container.append(sources);
+      addDisclosure(disclosures, `Public sources (${project.sources.length})`, sources);
     }
+    container.append(disclosures);
     if (project.repo) {
-      const repo = make("p");
+      const repo = make("p", "", "repo-link");
       repo.append(safeLink(`View repository for ${project.title} ↗`, project.repo));
       container.append(repo);
     }
   };
 
   const renderSkills = (container) => {
-    addHeading(container, "Tools represented in selected projects");
+    addHeading(container, "Tools represented in selected projects", "skills");
     const tools = [...new Set(projects.flatMap((project) => Array.isArray(project.stack) ? project.stack : []))].sort();
     if (!tools.length) {
-      addParagraph(container, projectsError || "No verified project tool data is available.", projectsError ? "error" : "muted");
+      const state = make("div", "", "state-message");
+      addParagraph(state, projectsError || "No verified project tool data is available.", projectsError ? "error" : "muted");
+      container.append(state);
       return;
     }
-    addList(container, tools, "tag-list");
-    addParagraph(container, "These labels describe the selected repositories; they are not a proficiency rating.", "muted");
+    const overview = make("div", "", "skills-overview");
+    addList(overview, tools, "tag-list");
+    addParagraph(overview, "These labels describe the selected repositories; they are not a proficiency rating.", "muted");
+    container.append(overview);
   };
 
   const renderContact = (container) => {
-    addHeading(container, "Contact");
-    const linkedin = make("p");
-    linkedin.append(safeLink("LinkedIn — Joshua Jericho Barja", "https://www.linkedin.com/in/joshua-jericho-barja-27b878286"));
-    const email = make("p");
-    email.append(safeLink("barjajoshuajericho@gmail.com", "mailto:barjajoshuajericho@gmail.com"));
-    container.append(linkedin, email);
-    container.append(safeLink("Visit github.com/jarichooo ↗", "https://github.com/jarichooo"));
+    addHeading(container, "Contact", "contact");
+    const contacts = make("ul", "", "contact-list");
+    const entries = [
+      ["LinkedIn", "Joshua Jericho Barja", "https://www.linkedin.com/in/joshua-jericho-barja-27b878286"],
+      ["Email", "barjajoshuajericho@gmail.com", "mailto:barjajoshuajericho@gmail.com"],
+      ["GitHub", "github.com/jarichooo", "https://github.com/jarichooo"]
+    ];
+    entries.forEach(([label, value, url]) => {
+      const item = make("li");
+      const arrow = make("span", "↗", "contact-arrow");
+      arrow.setAttribute("aria-hidden", "true");
+      item.append(make("span", label, "contact-label"), safeLink(value, url), arrow);
+      contacts.append(item);
+    });
+    container.append(contacts);
   };
 
   const renderLs = (container) => {
-    addHeading(container, "Portfolio sections");
-    addList(container, ["about/", "projects/", "skills/", "contact/"], "tag-list");
-    addParagraph(container, "Run a section name as a command to open it.", "muted");
+    addHeading(container, "Portfolio sections", "ls");
+    const sections = [
+      ["about", "Introduction"],
+      ["projects", "Selected public work"],
+      ["skills", "Tools represented in projects"],
+      ["contact", "Ways to connect"]
+    ];
+    const list = make("ul", "", "section-list");
+    sections.forEach(([command, description]) => {
+      const item = make("li");
+      const button = commandButton(command, "", "section-link");
+      button.append(make("code", `${command}/`), make("span", description));
+      item.append(button);
+      list.append(item);
+    });
+    container.append(list);
   };
 
   const announce = (message) => {
@@ -206,8 +262,11 @@
   const showEmptyHint = () => {
     const result = make("section", "", "result");
     result.tabIndex = -1;
-    addHeading(result, "Enter a command");
-    addParagraph(result, "Type about for an introduction, or help for available commands.", "error");
+    addHeading(result, "Enter a command", "input needed");
+    const state = make("div", "", "state-message");
+    addParagraph(state, "Type about for an introduction, or help for available commands.", "error");
+    state.append(commandButton("help", "View commands"));
+    result.append(state);
     output.replaceChildren(result);
     input.focus({ preventScroll: true });
     announce("Type about for an introduction, or help for available commands.");
@@ -246,8 +305,11 @@
     if (Object.hasOwn(renderers, canonicalCommand)) {
       renderers[canonicalCommand]();
     } else {
-      addHeading(result, "Command not found");
-      addParagraph(result, `Command not found: “${name}”. Type help for available commands.`, "error");
+      addHeading(result, "Command not found", "error");
+      const state = make("div", "", "state-message");
+      addParagraph(state, `Command not found: “${name}”.`, "error");
+      state.append(commandButton("help", "View commands"));
+      result.append(state);
     }
 
     output.replaceChildren(result);

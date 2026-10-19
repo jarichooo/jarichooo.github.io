@@ -51,8 +51,17 @@
       check(document.querySelector('a[href="https://www.linkedin.com/in/joshua-jericho-barja-27b878286"]'), "LinkedIn contact");
       submit("help");
       check(document.querySelector(".result:last-child h2").textContent === "Available commands", "typed help");
+      check(!document.querySelector(".result").textContent.includes("open <"), "help stays free of technical open syntax");
+      document.querySelector('.command-menu [data-command="about"]').click();
+      check(document.activeElement === input && document.querySelector('.result h2').textContent === 'About Joshua', "help actions keep focus in the prompt");
+      submit("skills");
+      check(document.querySelector(".result").textContent.includes("JavaScript"), "skills come from selected project data");
+      submit("ls");
+      check(document.querySelector(".result:last-child h2").textContent === "Portfolio sections", "section listing");
       submit("open 1");
       check(document.querySelector(".result:last-child h2").textContent === "Sample project", "number lookup");
+      check(document.querySelectorAll('.project-disclosure').length === 4, "project evidence remains available in disclosures");
+      check(!document.querySelector('.project-disclosure[open]'), "project details start compact");
       check(document.querySelectorAll(".result").length === 1 && !document.querySelector(".welcome"), "project replaces help and welcome");
       submit("open sample");
       check(document.querySelectorAll(".result").length === 1, "opening another project closes the previous output");

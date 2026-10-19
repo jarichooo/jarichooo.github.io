@@ -12,7 +12,9 @@ The opening screen waits for input: type `about` and press Enter to read Joshua'
 
 Run `python check_site.py` to verify project data, pinned evidence URLs, local assets, and the deployment allowlist. This check does not replace browser or screen-reader testing.
 
-Simple commands are listed beneath the prompt without a suggestion dropdown, open syntax, or aliases. Projects have Read project details and All projects buttons. Every command and project-button action returns focus to the input, including errors; `/` still focuses the prompt. Entrance, card, cursor, and hover animations respect reduced-motion preferences; content never waits for animation to finish. Command results have no focus rectangle; interactive controls retain green keyboard-focus indicators, and the input uses a green underline.
+Simple commands are listed beneath the prompt without a suggestion dropdown, open syntax, or aliases. Projects have View project and All projects buttons. Every command and project-button action returns focus to the input, including errors; `/` still focuses the prompt. Entrance, card, cursor, and hover animations respect reduced-motion preferences; content never waits for animation to finish. Command results have no focus rectangle; interactive controls retain green keyboard-focus indicators, and the input uses a green underline.
+
+Command outputs use distinct layouts: an introduction and focus panel for about, compact project rows, expandable contribution/scope/source notes in project details, clickable help and section lists, a tool cloud for skills, contact rows, and recovery buttons for errors. Project evidence and limits remain available inside native disclosure controls. Results use the full terminal width.
 
 `home` returns to the first screen and focuses the prompt. A focused, empty prompt shows a blinking green block cursor; typing uses the native text caret. The block cursor is hidden when the input is not focused. The opening screen animates again when returning home. Reduced motion keeps the cursor static.
 
