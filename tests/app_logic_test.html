@@ -27,7 +27,6 @@
     sources: [{ label: "Source", url: "https://github.com/jarichooo/sample" }]
   }];
   window.fetch = () => Promise.resolve({ ok: true, json: () => Promise.resolve(fixture) });
-  HTMLElement.prototype.scrollIntoView = function () { throw new Error("Command output must scroll the transcript, not the page"); };
 </script>
 <script src="../app.js"></script>
 <script>
@@ -49,6 +48,9 @@
       check(document.querySelector(".result:last-child h2").textContent === "Available commands", "help shortcut");
       submit("open 1");
       check(document.querySelector(".result:last-child h2").textContent === "Sample project", "number lookup");
+      check(document.querySelectorAll(".result").length === 1 && !document.querySelector(".welcome"), "project replaces help and welcome");
+      submit("open sample");
+      check(document.querySelectorAll(".result").length === 1, "opening another project closes the previous output");
       submit("work");
       check(document.querySelector(".result:last-child h2").textContent === "Selected public projects", "work alias");
       check(document.querySelectorAll(".project-card").length === 1, "projects appear after command");
@@ -58,6 +60,7 @@
       check(document.querySelector(".result:last-child .error").textContent.includes("Command not found"), "inherited names are not commands");
       submit("");
       check(document.querySelector(".result:last-child h2").textContent === "Enter a command", "empty command hint");
+      check(document.querySelectorAll(".result").length === 1, "empty input replaces previous output");
       submit("clear");
       check(document.querySelector(".welcome") && !document.querySelector(".result"), "clear restores welcome");
       check(!document.querySelector(".project-card"), "clear restores command-first landing");

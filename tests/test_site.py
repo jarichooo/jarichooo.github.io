@@ -43,14 +43,15 @@ class PortfolioSiteTests(unittest.TestCase):
         self.assertIn('<details class="guide">', html)
         self.assertNotIn('<details class="guide" open', html)
 
-    def test_terminal_keeps_output_inside_scroll_region(self):
+    def test_commands_replace_output_without_nested_scrolling(self):
         html = (ROOT / "index.html").read_text(encoding="utf-8")
         css = (ROOT / "styles.css").read_text(encoding="utf-8")
         script = (ROOT / "app.js").read_text(encoding="utf-8")
-        self.assertIn('aria-label="Scrollable terminal transcript" tabindex="0"', html)
-        self.assertIn('grid-template-rows: auto auto minmax(0, 1fr) auto', css)
-        self.assertIn('overflow-y: auto', css)
-        self.assertNotIn('scrollIntoView(', script)
+        self.assertIn('aria-label="Current command output"', html)
+        self.assertNotIn('overflow-y: auto', css)
+        self.assertNotIn('height: 100dvh', css)
+        self.assertNotIn('output.append(result)', script)
+        self.assertEqual(script.count('output.replaceChildren(result)'), 2)
 
 
 if __name__ == "__main__":

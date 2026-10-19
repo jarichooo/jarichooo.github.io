@@ -195,7 +195,6 @@
 
   const restoreWelcome = () => {
     output.replaceChildren(...welcomeTemplate.map((child) => child.cloneNode(true)));
-    output.scrollTop = 0;
   };
 
   const showEmptyHint = () => {
@@ -203,9 +202,8 @@
     result.tabIndex = -1;
     addHeading(result, "Enter a command");
     addParagraph(result, "Type a command, or choose one of the options above.", "error");
-    output.append(result);
-    result.focus({ preventScroll: true });
-    output.scrollTop = result.offsetTop;
+    output.replaceChildren(result);
+    result.focus();
     announce("Type a command, or choose one of the options above.");
   };
 
@@ -246,9 +244,8 @@
       addParagraph(result, `Command not found: “${name}”. Try help or choose an option above.`, "error");
     }
 
-    output.append(result);
-    result.focus({ preventScroll: true });
-    output.scrollTop = result.offsetTop;
+    output.replaceChildren(result);
+    result.focus();
     announce(`Command ${command} completed.`);
   };
 

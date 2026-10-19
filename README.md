@@ -8,7 +8,7 @@ From this directory run `python -m http.server 8000 --bind 127.0.0.1`, then open
 
 Visitors can type commands or use the guided buttons. No command executes a real shell. Contact opens the public GitHub profile. No analytics, external fonts, or runtime dependencies are required.
 
-The opening screen waits for input: type `help` and press Enter, or select **Run help**. Extra shortcuts are tucked under **Need a hand?**. Projects appear only after `projects` or `open <number|id>`. `clear` restores this opening screen. The current selection is IoT Air Quality Monitor, Morphism, and CrackTify. The terminal has a bounded height and scrolls its transcript internally, keeping the command prompt in view as output grows.
+The opening screen waits for input: type `help` and press Enter, or select **Run help**. Extra shortcuts are tucked under **Need a hand?**. Projects appear only after `projects` or `open <number|id>`. Every command replaces the previous output, so opening a project closes the previous view. There is no internal terminal scrollbar. Up/Down still recalls command history. `clear` restores the opening screen. The current selection is IoT Air Quality Monitor, Morphism, and CrackTify.
 
 Run `python check_site.py` to verify project data, pinned evidence URLs, local assets, and the deployment allowlist. This check does not replace browser or screen-reader testing.
 
