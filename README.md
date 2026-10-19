@@ -12,7 +12,7 @@ The opening screen waits for input: type `about` and press Enter to read Joshua'
 
 Run `python check_site.py` to verify project data, pinned evidence URLs, local assets, and the deployment allowlist. This check does not replace browser or screen-reader testing.
 
-Commands and aliases are listed beneath the prompt without a suggestion dropdown. Projects can be opened by number, id, or title (for example `open Morphism`); project details include an All projects button. Entrance, card, cursor, and hover animations respect reduced-motion preferences; content never waits for animation to finish. Command results have no focus rectangle; interactive controls retain green keyboard-focus indicators, and the input uses a green underline.
+Simple commands are listed beneath the prompt without a suggestion dropdown, open syntax, or aliases. Projects have Read project details and All projects buttons. Every command and project-button action returns focus to the input, including errors; `/` still focuses the prompt. Entrance, card, cursor, and hover animations respect reduced-motion preferences; content never waits for animation to finish. Command results have no focus rectangle; interactive controls retain green keyboard-focus indicators, and the input uses a green underline.
 
 `home` returns to the first screen and focuses the prompt. A focused, empty prompt shows a blinking green block cursor; typing uses the native text caret. The block cursor is hidden when the input is not focused. The opening screen animates again when returning home. Reduced motion keeps the cursor static.
 

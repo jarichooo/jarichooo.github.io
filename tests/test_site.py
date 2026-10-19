@@ -53,6 +53,9 @@ class PortfolioSiteTests(unittest.TestCase):
         self.assertNotIn('list="command-suggestions"', html)
         self.assertIn('Commands: <code>about</code>', html)
         self.assertIn('<code>home</code>', html)
+        self.assertNotIn('open &lt;', html)
+        self.assertNotIn('Aliases:', html)
+        self.assertIn('Press <code>/</code> to focus the prompt.', html)
 
     def test_commands_replace_output_without_nested_scrolling(self):
         html = (ROOT / "index.html").read_text(encoding="utf-8")

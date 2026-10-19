@@ -78,8 +78,6 @@
       ["home", "Return to the opening screen"],
       ["about", "Read about Joshua"],
       ["projects", "List selected public projects"],
-      ["open <number|id>", "Inspect evidence for one project"],
-      ["project <number|id>", "Alias for open"],
       ["skills", "Show tools found in selected projects"],
       ["contact", "Show LinkedIn, email, and GitHub links"],
       ["ls", "List portfolio sections"],
@@ -211,7 +209,7 @@
     addHeading(result, "Enter a command");
     addParagraph(result, "Type about for an introduction, or help for available commands.", "error");
     output.replaceChildren(result);
-    result.focus();
+    input.focus({ preventScroll: true });
     announce("Type about for an introduction, or help for available commands.");
   };
 
@@ -253,7 +251,7 @@
     }
 
     output.replaceChildren(result);
-    result.focus();
+    input.focus({ preventScroll: true });
     announce(`Command ${command} completed.`);
   };
 

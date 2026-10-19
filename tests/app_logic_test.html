@@ -36,6 +36,7 @@
     const submit = (command) => {
       input.value = command;
       form.dispatchEvent(new Event("submit", { bubbles: true, cancelable: true }));
+      if (document.activeElement !== input) throw new Error(`Input lost focus after command: ${command}`);
     };
     const check = (condition, message) => {
       if (!condition) throw new Error(message);
@@ -58,6 +59,7 @@
       submit("open Sample project");
       check(document.querySelector(".result:last-child h2").textContent === "Sample project", "project title lookup");
       document.querySelector('[data-command="projects"]').click();
+      check(document.activeElement === input, "project button returns focus to input");
       check(document.querySelector(".result:last-child h2").textContent === "Selected public projects", "back to project list");
       submit("work");
       check(document.querySelector(".result:last-child h2").textContent === "Selected public projects", "work alias");
@@ -76,6 +78,9 @@
       submit("clear");
       check(document.querySelector(".welcome") && !document.querySelector(".result"), "clear restores welcome");
       check(!document.querySelector(".project-card"), "clear restores command-first landing");
+      input.blur();
+      document.body.dispatchEvent(new KeyboardEvent("keydown", { key: "/", bubbles: true }));
+      check(document.activeElement === input, "slash shortcut still focuses input");
       results.textContent = "PASS: command routing, aliases, errors, empty input, and clear";
     } catch (error) {
       results.textContent = `FAIL: ${error.message}`;
