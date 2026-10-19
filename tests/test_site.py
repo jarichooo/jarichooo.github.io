@@ -45,6 +45,8 @@ class PortfolioSiteTests(unittest.TestCase):
         self.assertNotIn('<footer>', html)
         self.assertNotIn('fourth-year', html)
         self.assertIn('Type <code>about</code>', html)
+        self.assertIn('<p class="eyebrow">Developer portfolio</p>', html)
+        self.assertIn('<label for="terminal-input">Enter a command</label>', html)
         self.assertIn('fourth-year Computer Science student at Camarines Sur Polytechnic Colleges', script)
         self.assertIn('https://www.linkedin.com/in/joshua-jericho-barja-27b878286', script)
         self.assertIn('mailto:barjajoshuajericho@gmail.com', script)

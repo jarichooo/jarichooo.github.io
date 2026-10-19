@@ -10,6 +10,8 @@ Visitors type commands to explore. No command executes a real shell. The contact
 
 The opening screen waits for input: type `about` and press Enter to read Joshua's introduction, or `help` for available commands. Projects appear only after `projects` or `open <number|id>`. Every command replaces the previous output, so opening a project closes the previous view. There is no internal terminal scrollbar. Up/Down still recalls command history. `clear` restores the opening screen without the introduction. The current selection is IoT Air Quality Monitor, Morphism, and CrackTify.
 
+The welcome uses a full-width responsive layout with a session-detail panel, stacking on mobile. It preserves the owner's edited labels, and its brief entrance animations respect reduced motion.
+
 Run `python check_site.py` to verify project data, pinned evidence URLs, local assets, and the deployment allowlist. This check does not replace browser or screen-reader testing.
 
 Simple commands are listed beneath the prompt without a suggestion dropdown, open syntax, or aliases. Projects have View project and All projects buttons. Every command and project-button action returns focus to the input, including errors; `/` still focuses the prompt. Entrance, card, cursor, and hover animations respect reduced-motion preferences; content never waits for animation to finish. Command results have no focus rectangle; interactive controls retain green keyboard-focus indicators, and the input uses a green underline.

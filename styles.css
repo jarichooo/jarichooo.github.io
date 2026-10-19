@@ -170,16 +170,70 @@ button {
   padding: clamp(1.25rem, 4vw, 2rem);
 }
 
-.welcome,
 .featured {
   max-width: 72ch;
   margin-inline: auto;
 }
 
 .welcome {
-  padding-bottom: 2rem;
-  border-bottom: 1px dashed var(--line);
+  width: 100%;
+  padding-bottom: clamp(1.25rem, 4vw, 2rem);
+  border-bottom: 1px solid var(--line);
   animation: reveal 260ms ease-out;
+}
+
+.welcome-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(15rem, 0.38fr);
+  gap: clamp(1.5rem, 5vw, 4rem);
+  align-items: end;
+}
+
+.welcome-intro {
+  min-width: 0;
+  animation: reveal 320ms 70ms ease-out backwards;
+}
+
+.welcome-session {
+  margin: 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  animation: reveal 320ms 140ms ease-out backwards;
+}
+
+.welcome-session > div {
+  display: grid;
+  grid-template-columns: 6.5rem minmax(0, 1fr);
+  gap: 0.75rem;
+  align-items: baseline;
+  padding: 0.65rem 0;
+}
+
+.welcome-session > div + div {
+  border-top: 1px dashed var(--line);
+}
+
+.welcome-session dt {
+  color: var(--muted);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.welcome-session dd {
+  margin: 0;
+  color: var(--text);
+  font-size: 0.78rem;
+}
+
+.welcome-session i {
+  display: inline-block;
+  width: 0.45rem;
+  height: 0.45rem;
+  margin-right: 0.4rem;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 0 3px rgba(126, 231, 135, 0.08);
 }
 
 .command-line,
@@ -198,10 +252,10 @@ button {
 
 .welcome h1 {
   margin: 0;
-  font-size: clamp(2.35rem, 8vw, 5rem);
+  font-size: clamp(2.6rem, 7.5vw, 5.75rem);
   font-weight: 700;
   letter-spacing: -0.07em;
-  line-height: 1;
+  line-height: 0.95;
 }
 
 .welcome-copy {
@@ -215,9 +269,15 @@ button {
 }
 
 .welcome-hint {
-  margin: 0;
-  color: var(--amber);
+  max-width: 66ch;
+  margin: 1.25rem 0 0;
+  color: var(--muted);
   font-size: 0.83rem;
+}
+
+.welcome-hint code {
+  color: var(--cyan);
+  font-weight: 700;
 }
 
 code {
@@ -740,6 +800,23 @@ code {
 @keyframes cursor { 50% { opacity: 0; } }
 
 @media (max-width: 760px) {
+  .welcome-layout {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    align-items: start;
+  }
+
+  .welcome-session {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .welcome-session > div + div {
+    padding-left: 1rem;
+    border-top: 0;
+    border-left: 1px dashed var(--line);
+  }
+
   .about-profile { grid-template-columns: 1fr; }
 
   .about-focus {
@@ -780,6 +857,20 @@ code {
     display: none;
   }
 
+  .welcome h1 {
+    font-size: clamp(2.35rem, 13vw, 4rem);
+  }
+
+  .welcome-session {
+    grid-template-columns: 1fr;
+  }
+
+  .welcome-session > div + div {
+    padding-left: 0;
+    border-top: 1px dashed var(--line);
+    border-left: 0;
+  }
+
   .prompt-row {
     flex-wrap: wrap;
   }
@@ -814,7 +905,7 @@ code {
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .terminal, .welcome, .result, .project-card, .terminal-cursor { animation: none; }
+  .terminal, .welcome, .welcome-intro, .welcome-session, .result, .project-card, .terminal-cursor { animation: none; }
   .terminal, .project-link, .prompt-row button, .command-menu-button, .section-link { transition: none; }
   .project-link:hover, .command-menu-button:hover, .section-link:hover { transform: none; }
 }
