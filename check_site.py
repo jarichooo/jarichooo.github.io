@@ -46,7 +46,7 @@ def main():
     page.feed((ROOT / 'index.html').read_text(encoding='utf-8'))
     assert len(page.ids) == len(set(page.ids)), 'Duplicate HTML ids'
     for asset in page.local_assets:
-        assert (ROOT / asset).is_file(), f'Broken local asset: {asset}'
+        assert (ROOT / urlparse(asset).path).is_file(), f'Broken local asset: {asset}'
     workflow = (ROOT / '.github/workflows/pages.yml').read_text(encoding='utf-8')
     assert 'workflow_dispatch:' in workflow and 'branches: [main]' in workflow
     assert 'cp index.html styles.css app.js projects.json _site/' in workflow

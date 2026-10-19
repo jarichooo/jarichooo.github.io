@@ -171,8 +171,7 @@ button {
 }
 
 .welcome,
-.featured,
-.result {
+.featured {
   max-width: 72ch;
   margin-inline: auto;
 }
