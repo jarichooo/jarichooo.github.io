@@ -99,7 +99,7 @@
       ["home", "Return to the opening screen"],
       ["about", "Read about Joshua"],
       ["projects", "List selected public projects"],
-      ["skills", "Show tools found in selected projects"],
+      ["skills", "Show my skills"],
       ["contact", "Show LinkedIn, email, and GitHub links"],
       ["ls", "List portfolio sections"],
       ["clear", "Clear terminal output"]
@@ -199,17 +199,9 @@
   };
 
   const renderSkills = (container) => {
-    addHeading(container, "Tools represented in selected projects", "skills");
-    const tools = [...new Set(projects.flatMap((project) => Array.isArray(project.stack) ? project.stack : []))].sort();
-    if (!tools.length) {
-      const state = make("div", "", "state-message");
-      addParagraph(state, projectsError || "No verified project tool data is available.", projectsError ? "error" : "muted");
-      container.append(state);
-      return;
-    }
+    addHeading(container, "My skills", "skills");
     const overview = make("div", "", "skills-overview");
-    addList(overview, tools, "tag-list");
-    addParagraph(overview, "These labels describe the selected repositories; they are not a proficiency rating.", "muted");
+    addList(overview, ["Python", "Linux systems", "IoT devices", "Basic networking"], "tag-list");
     container.append(overview);
   };
 
@@ -236,7 +228,7 @@
     const sections = [
       ["about", "Introduction"],
       ["projects", "Selected public work"],
-      ["skills", "Tools represented in projects"],
+      ["skills", "My skills"],
       ["contact", "Ways to connect"]
     ];
     const list = make("ul", "", "section-list");
@@ -272,9 +264,36 @@
     announce("Type about for an introduction, or help for available commands.");
   };
 
+  let audioContext;
+  const playPop = async () => {
+    try {
+      const Audio = window.AudioContext || window.webkitAudioContext;
+      if (!Audio) return;
+      audioContext ||= new Audio();
+      if (audioContext.state === "suspended") await audioContext.resume();
+      const start = audioContext.currentTime;
+      const tone = audioContext.createOscillator();
+      const volume = audioContext.createGain();
+      tone.type = "sine";
+      tone.frequency.setValueAtTime(640, start);
+      tone.frequency.exponentialRampToValueAtTime(220, start + 0.085);
+      volume.gain.setValueAtTime(0, start);
+      volume.gain.linearRampToValueAtTime(0.12, start + 0.005);
+      volume.gain.exponentialRampToValueAtTime(0.001, start + 0.085);
+      tone.connect(volume);
+      volume.connect(audioContext.destination);
+      tone.onended = () => { tone.disconnect(); volume.disconnect(); };
+      tone.start(start);
+      tone.stop(start + 0.09);
+    } catch {
+      // Commands still work when the browser cannot play audio.
+    }
+  };
+
   const runCommand = (rawCommand) => {
     const cleaned = rawCommand.trim().replace(/\s+/g, " ");
     if (!cleaned) return;
+    void playPop();
     const [name, ...args] = cleaned.split(" ");
     const command = name.toLowerCase();
 

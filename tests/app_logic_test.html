@@ -55,7 +55,7 @@
       document.querySelector('.command-menu [data-command="about"]').click();
       check(document.activeElement === input && document.querySelector('.result h2').textContent === 'About Joshua', "help actions keep focus in the prompt");
       submit("skills");
-      check(document.querySelector(".result").textContent.includes("JavaScript"), "skills come from selected project data");
+      check(["Python", "Linux systems", "IoT devices", "Basic networking"].every((skill) => document.querySelector(".result").textContent.includes(skill)), "skills reflect the owner's stated skills");
       submit("ls");
       check(document.querySelector(".result:last-child h2").textContent === "Portfolio sections", "section listing");
       submit("open 1");
