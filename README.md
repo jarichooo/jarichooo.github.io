@@ -6,9 +6,9 @@ A buildless, responsive portfolio for GitHub Pages. Only verified public reposit
 
 From this directory run `python -m http.server 8000 --bind 127.0.0.1`, then open http://127.0.0.1:8000. Serve over HTTP because project data loads from JSON.
 
-Visitors can type commands or use the guided buttons. No command executes a real shell. Contact opens the public GitHub profile. No analytics, external fonts, or runtime dependencies are required.
+Visitors type commands to explore. No command executes a real shell. The contact command shows the owner's provided LinkedIn and email, plus GitHub. No analytics, external fonts, or runtime dependencies are required.
 
-The opening screen waits for input: type `help` and press Enter, or select **Run help**. Extra shortcuts are tucked under **Need a hand?**. Projects appear only after `projects` or `open <number|id>`. Every command replaces the previous output, so opening a project closes the previous view. There is no internal terminal scrollbar. Up/Down still recalls command history. `clear` restores the opening screen. The current selection is IoT Air Quality Monitor, Morphism, and CrackTify.
+The opening screen waits for input: type `about` and press Enter to read Joshua's introduction, or `help` for available commands. Projects appear only after `projects` or `open <number|id>`. Every command replaces the previous output, so opening a project closes the previous view. There is no internal terminal scrollbar. Up/Down still recalls command history. `clear` restores the opening screen without the introduction. The current selection is IoT Air Quality Monitor, Morphism, and CrackTify.
 
 Run `python check_site.py` to verify project data, pinned evidence URLs, local assets, and the deployment allowlist. This check does not replace browser or screen-reader testing.
 

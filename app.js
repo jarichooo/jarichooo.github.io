@@ -22,9 +22,9 @@
     const link = make("a", label);
     try {
       const parsed = new URL(url);
-      if (!/^https?:$/.test(parsed.protocol)) throw new Error("Unsupported URL");
+      if (!/^(https?|mailto):$/.test(parsed.protocol)) throw new Error("Unsupported URL");
       link.href = parsed.href;
-      link.target = "_blank";
+      if (parsed.protocol !== "mailto:") link.target = "_blank";
       link.rel = "noreferrer";
     } catch (_) {
       link.textContent += " (link unavailable)";
@@ -79,7 +79,7 @@
       ["open <number|id>", "Inspect evidence for one project"],
       ["project <number|id>", "Alias for open"],
       ["skills", "Show tools found in selected projects"],
-      ["contact", "Open Joshua’s GitHub profile"],
+      ["contact", "Show LinkedIn, email, and GitHub links"],
       ["ls", "List portfolio sections"],
       ["clear", "Clear terminal output"]
     ];
@@ -94,8 +94,7 @@
 
   const renderAbout = (container) => {
     addHeading(container, "About Joshua");
-    addParagraph(container, "Joshua Jericho D. Barja publishes public work under the GitHub handle @jarichooo.");
-    addParagraph(container, "This portfolio highlights selected repositories using claims checked against their public code, documentation, and repository history.");
+    addParagraph(container, "Hi, I'm Joshua Jericho Barja, a fourth-year Computer Science student at Camarines Sur Polytechnic Colleges. My studies and personal interests are primarily focused on cybersecurity and computer networking. I am actively learning and building a solid foundation in these areas as I complete my degree and prepare to start my career in the tech industry.");
   };
 
   const renderProjects = (container) => {
@@ -178,7 +177,11 @@
 
   const renderContact = (container) => {
     addHeading(container, "Contact");
-    addParagraph(container, "The verified public contact point for this portfolio is GitHub.");
+    const linkedin = make("p");
+    linkedin.append(safeLink("LinkedIn — Joshua Jericho Barja", "https://www.linkedin.com/in/joshua-jericho-barja-27b878286"));
+    const email = make("p");
+    email.append(safeLink("barjajoshuajericho@gmail.com", "mailto:barjajoshuajericho@gmail.com"));
+    container.append(linkedin, email);
     container.append(safeLink("Visit github.com/jarichooo ↗", "https://github.com/jarichooo"));
   };
 
@@ -201,10 +204,10 @@
     const result = make("section", "", "result");
     result.tabIndex = -1;
     addHeading(result, "Enter a command");
-    addParagraph(result, "Type a command, or choose one of the options above.", "error");
+    addParagraph(result, "Type about for an introduction, or help for available commands.", "error");
     output.replaceChildren(result);
     result.focus();
-    announce("Type a command, or choose one of the options above.");
+    announce("Type about for an introduction, or help for available commands.");
   };
 
   const runCommand = (rawCommand) => {
@@ -241,7 +244,7 @@
       renderers[canonicalCommand]();
     } else {
       addHeading(result, "Command not found");
-      addParagraph(result, `Command not found: “${name}”. Try help or choose an option above.`, "error");
+      addParagraph(result, `Command not found: “${name}”. Type help for available commands.`, "error");
     }
 
     output.replaceChildren(result);

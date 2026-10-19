@@ -134,22 +134,6 @@ button {
   background: var(--green);
 }
 
-.guide {
-  display: block;
-  padding: 0.25rem clamp(1rem, 4vw, 2rem);
-  border-bottom: 1px solid var(--line);
-  background: var(--raised);
-}
-
-.guide summary {
-  min-height: 44px;
-  padding: 0.6rem 0;
-  color: var(--cyan);
-  cursor: pointer;
-}
-
-.guide[open] .guide-copy { margin: 1rem 0; }
-
 .eyebrow {
   margin: 0 0 0.35rem;
   color: var(--amber);
@@ -159,26 +143,12 @@ button {
   text-transform: uppercase;
 }
 
-.guide-title,
 .featured h2 {
   margin: 0;
   font-size: 1.1rem;
   font-weight: 700;
 }
 
-.guide-copy > p:last-child {
-  margin: 0.35rem 0 0;
-  color: var(--muted);
-  font-size: 0.8rem;
-}
-
-.guide nav {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 0.5rem;
-}
-
-.guide button,
 .text-command {
   min-height: 44px;
   border: 1px solid var(--control-line);
@@ -186,26 +156,6 @@ button {
   cursor: pointer;
 }
 
-.guide button {
-  display: flex;
-  min-width: 0;
-  padding: 0.55rem 0.65rem;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-  text-align: left;
-}
-
-.guide button strong {
-  font-size: 0.75rem;
-}
-
-.guide button span {
-  color: var(--cyan);
-  font-size: 0.67rem;
-}
-
-.guide button:hover,
 .text-command:hover {
   border-color: var(--cyan);
   background: rgba(121, 192, 255, 0.06);
@@ -485,18 +435,6 @@ code {
 .error { color: var(--red) !important; }
 .muted { color: var(--muted); }
 
-footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  padding: 1rem 0 0;
-  color: var(--muted);
-  font-size: 0.72rem;
-}
-
-footer p { margin: 0; }
-
 .no-script {
   position: fixed;
   z-index: 20;
@@ -530,14 +468,6 @@ footer p { margin: 0; }
 }
 
 @media (max-width: 760px) {
-  .guide {
-    grid-template-columns: 1fr;
-  }
-
-  .guide nav {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
   .project-meta {
     grid-template-columns: 2rem 1fr;
   }
@@ -594,9 +524,6 @@ footer p { margin: 0; }
     grid-template-columns: 1fr;
   }
 
-  footer {
-    display: none;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {

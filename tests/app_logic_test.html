@@ -1,7 +1,6 @@
 <!doctype html>
 <meta charset="utf-8">
 <title>Portfolio command checks</title>
-<button type="button" data-command="help">Help shortcut</button>
 <div id="output">
   <section class="welcome"><h1>Welcome</h1></section>
 </div>
@@ -44,8 +43,13 @@
 
     try {
       check(!document.querySelector(".project-card"), "landing waits for a command");
-      document.querySelector('[data-command="help"]').click();
-      check(document.querySelector(".result:last-child h2").textContent === "Available commands", "help shortcut");
+      submit("about");
+      check(document.querySelector(".result:last-child").textContent.includes("fourth-year Computer Science student at Camarines Sur Polytechnic Colleges"), "typed about reveals introduction");
+      submit("contact");
+      check(document.querySelector('a[href="mailto:barjajoshuajericho@gmail.com"]'), "email opens mail client");
+      check(document.querySelector('a[href="https://www.linkedin.com/in/joshua-jericho-barja-27b878286"]'), "LinkedIn contact");
+      submit("help");
+      check(document.querySelector(".result:last-child h2").textContent === "Available commands", "typed help");
       submit("open 1");
       check(document.querySelector(".result:last-child h2").textContent === "Sample project", "number lookup");
       check(document.querySelectorAll(".result").length === 1 && !document.querySelector(".welcome"), "project replaces help and welcome");

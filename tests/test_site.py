@@ -39,9 +39,15 @@ class PortfolioSiteTests(unittest.TestCase):
         self.assertNotIn("innerHTML", script)
         self.assertNotIn('class="project-card"', html)
         self.assertNotIn('id="initial-projects"', html)
-        self.assertIn('data-command="help"', html)
-        self.assertIn('<details class="guide">', html)
-        self.assertNotIn('<details class="guide" open', html)
+        self.assertNotIn('class="guide"', html)
+        self.assertNotIn('data-command="about"', html)
+        self.assertNotIn('Run help', html)
+        self.assertNotIn('<footer>', html)
+        self.assertNotIn('fourth-year', html)
+        self.assertIn('Type <code>about</code>', html)
+        self.assertIn('fourth-year Computer Science student at Camarines Sur Polytechnic Colleges', script)
+        self.assertIn('https://www.linkedin.com/in/joshua-jericho-barja-27b878286', script)
+        self.assertIn('mailto:barjajoshuajericho@gmail.com', script)
 
     def test_commands_replace_output_without_nested_scrolling(self):
         html = (ROOT / "index.html").read_text(encoding="utf-8")
