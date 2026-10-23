@@ -34,3 +34,25 @@ The workflow deploys pushes to `main` and also supports manual runs:
 The workflow packages only `index.html`, `styles.css`, `app.js`, and `projects.json`, plus an empty `.nojekyll`. Local notes, repository metadata, tests, and future unrelated files are not included in that artifact. Do not add private material to public source control, even outside the artifact.
 
 Workflow structure follows [GitHub's custom Pages workflow guidance](https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages).
+
+## Methodology
+
+Build the interface with semantic HTML, responsive CSS, and vanilla JavaScript. [`app.js`](app.js) routes typed commands to DOM renderers and loads project records from [`projects.json`](projects.json). Project selection uses public repository evidence and records contribution scope and limitations; [`SELECTION.md`](SELECTION.md) explains that process.
+
+The [Pages workflow](.github/workflows/pages.yml) publishes an explicit list of static assets. Validation is provided by [`check_site.py`](check_site.py) and the checks in [`tests/`](tests/).
+
+## Results and evaluation
+
+The implemented portfolio presents three selected projects—IoT Air Quality Monitor, Morphism, and CrackTify—alongside an introduction, skills, contact links, and command help. It includes command history, project detail views, keyboard focus handling, and reduced-motion styling. The published address is [jarichooo.github.io](https://jarichooo.github.io/).
+
+These results describe the checked-in functionality. No measured usability, accessibility audit, or performance results are reported here. The validation commands above allow reviewers to reproduce the available checks.
+
+## Source, data, and documentation
+
+- **Source:** [`index.html`](index.html), [`styles.css`](styles.css), and [`app.js`](app.js).
+- **Data:** [`projects.json`](projects.json) contains manually curated public project metadata and evidence links. This project does not require a training dataset.
+- **Documentation:** this README covers local preview and deployment; [`SELECTION.md`](SELECTION.md) covers selection evidence, and [`REVIEW-NOTES.md`](REVIEW-NOTES.md) records review notes.
+
+## Topics
+
+`portfolio` · `github-pages` · `javascript` · `html` · `css` · `responsive-design`
